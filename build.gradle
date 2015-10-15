@@ -1,0 +1,69 @@
+plugins {
+    id "com.github.hierynomus.license" version "0.11.0"
+    id 'net.researchgate.release' version '2.1.2'
+}
+
+apply plugin: 'java'
+apply plugin: "jacoco"
+apply plugin: 'idea'
+
+apply from: 'libraries.gradle'
+apply from: 'gradle/license.gradle'
+apply from: 'gradle/release.gradle'
+
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+
+sourceCompatibility = 1.7
+
+group = "io.jmnarloch"
+archivesBaseName="feign-oauth2-spring-cloud-starter"
+
+ext {
+    isReleaseVersion = !version.endsWith("SNAPSHOT")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'feign-oauth2-spring-cloud-starter',
+                   'Implementation-Version': version
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'com.netflix.feign') {
+                details.useVersion "8.7.1"
+            }
+        }
+    }
+}
+
+dependencies {
+
+    compile (libraries.springCloudFeign)
+    compile (libraries.springOAuth2)
+    compile (libraries.springBootConfigurationProcessor) {
+        ext.optional = true
+    }
+
+    testCompile (libraries.springCloudRibbon)
+    testCompile (libraries.feignCore)
+    testCompile (libraries.springBootWeb)
+    testCompile (libraries.springBootTest)
+    testCompile (libraries.junit)
+    testCompile (libraries.mockito)
+}
+
+findbugs {
+    ignoreFailures = true
+}
