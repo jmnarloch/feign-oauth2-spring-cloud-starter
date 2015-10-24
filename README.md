@@ -3,6 +3,7 @@
 > A Spring Cloud Feign extension that propagates OAuth2 authorization tokes.
 
 [![Build Status](https://travis-ci.org/jmnarloch/feign-oauth2-spring-cloud-starter.svg?branch=master)](https://travis-ci.org/jmnarloch/feign-oauth2-spring-cloud-starter)
+[![Coverage Status](https://coveralls.io/repos/jmnarloch/feign-oauth2-spring-cloud-starter/badge.svg?branch=master&service=github)](https://coveralls.io/github/jmnarloch/feign-oauth2-spring-cloud-starter?branch=master)
 
 ## Features
 
